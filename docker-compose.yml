@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  adminer:
+    build:
+      context: ./DockerImages/Adminer
+      dockerfile: Dockerfile
+    image: adminer-image
+
+  composer:
+    build:
+      context: ./DockerImages/Composer
+      dockerfile: Dockerfile
+    image: composer-image
+
+  postgres:
+    build:
+      context: ./DockerImages/Postgres
+      dockerfile: Dockerfile
+    image: database-image
+
+  symfony:
+    build:
+      context: ./DockerImages/Postgres
+      dockerfile: Dockerfile
+    image: symfony-image
