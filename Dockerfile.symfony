@@ -1,0 +1,45 @@
+FROM alpine:latest
+
+WORKDIR /app
+
+# Install persistent/runtime dependencies
+RUN apk add --no-cache \
+    acl \
+    fcgi \
+    file \
+    bash \
+    git \
+    linux-headers \
+    npm \
+    ;
+RUN apk --no-cache add php81 \
+    php81-cli \
+    php81-phar php81-json php81-openssl php81-pdo php81-pdo_pgsql php81-mbstring php81-tokenizer php81-xml php81-ctype php81-iconv php81-simplexml php81-dom php81-session curl git bash && \
+    curl -sS https://getcomposer.org/installer | php81 -- --install-dir=/usr/local/bin --filename=composer && \
+    ln -s /usr/bin/php81 /usr/bin/php
+
+# Delete directory if it exists
+RUN rm -rf /var/www/html
+
+# Symfony project dir path
+WORKDIR /var/www/html
+
+# Creat symfony project
+# RUN composer create-project symfony/skeleton .
+
+# Installer php extension pour symfony
+RUN apk add --no-cache \
+    postgresql-dev \
+    libxml2-dev \
+    php81-pdo_pgsql \
+    php81-simplexml \
+    php81-posix \
+    php81-pdo \
+    bash \
+    curl \
+    && curl -sS https://get.symfony.com/cli/installer | bash \
+    && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
+EXPOSE 8000
+
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/public"]
