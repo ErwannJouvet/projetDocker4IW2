@@ -1,0 +1,13 @@
+FROM alpine:latest
+
+# On assigne la metadata pour l'image
+LABEL maintainer="Erwann JOUVET <vinistys@gmail.com>"
+
+# Installation des dépendances nécessaires pour Composer
+RUN apk --no-cache add curl php php-json php-phar php-openssl php-curl php-zlib php-dom php-mbstring
+
+# Téléchargement et installation de Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# Exécuter Composer lorsqu'un conteneur basé sur cette image est démarré
+CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]

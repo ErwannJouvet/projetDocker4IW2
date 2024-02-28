@@ -1,11 +1,11 @@
 version: "3.8"
 
 services:
-  # composer:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.composer
-  #   restart: unless-stopped
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile.composer
+    restart: unless-stopped
   
   postgresql:
     build:
@@ -14,7 +14,7 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-main}
+      POSTGRES_DB: ${POSTGRES_DB:-symfony_db}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mydatabasepassword}
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
     volumes:
@@ -27,10 +27,10 @@ services:
       context: .
       dockerfile: Dockerfile.symfony
     depends_on:
-      # - composer
+      - composer
       - postgresql
     environment:
-      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-mydatabasepassword}@custom_postgres:5432/${POSTGRES_DB:-main}?serverVersion=${POSTGRES_VERSION:-15.6}
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-mydatabasepassword}@postgresql:5432/${POSTGRES_DB:-symfony_db}?serverVersion=${POSTGRES_VERSION:-15.6}
     volumes:
       - ./src:/var/www/html
     ports:

@@ -18,16 +18,16 @@ RUN apk --no-cache add php81 \
     curl -sS https://getcomposer.org/installer | php81 -- --install-dir=/usr/local/bin --filename=composer && \
     ln -s /usr/bin/php81 /usr/bin/php
 
-# Delete directory if it exists
+# On supprime le dossier si il existe
 RUN rm -rf /var/www/html
 
-# Symfony project dir path
+# Change de dossier pour le projet symfony (le crée si il n'existe pas)
 WORKDIR /var/www/html
 
-# Creat symfony project
+# Création du projet symfony
 # RUN composer create-project symfony/skeleton .
 
-# Installer php extension pour symfony
+# Installation des extensions php nécessaires pour symfony
 RUN apk add --no-cache \
     postgresql-dev \
     libxml2-dev \
@@ -40,6 +40,8 @@ RUN apk add --no-cache \
     && curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
+# On expose le container symfony sur le port 8000
 EXPOSE 8000
 
+# Commande pour lancer Symfony
 CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/public"]
