@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  postgresql:
+    build:
+        context: .
+        dockerfile: Dockerfile.postgresql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-symfony_db}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mydatabasepassword}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - platinum
+
+  adminer:
+    build:
+      context: .
+      dockerfile: Dockerfile.adminer
+    depends_on:
+      - postgresql
+    ports:
+      - "8080:8080"
+    networks:
+      - platinum
+
+volumes:
+  db_data:
+
+networks:
+  platinum:
+    driver: bridge

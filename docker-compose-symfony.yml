@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  composer:
+    build:
+      context: .
+      dockerfile: Dockerfile.composer
+    restart: unless-stopped
+    networks:
+      - platinum
+
+  symfony:
+    build:
+      context: .
+      dockerfile: Dockerfile.symfony
+    depends_on:
+      - composer
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-mydatabasepassword}@postgresql:5432/${POSTGRES_DB:-symfony_db}?serverVersion=${POSTGRES_VERSION:-15.6}
+    volumes:
+      - ./src:/var/www/html
+    ports:
+      - 8000:8000
+    networks:
+      - platinum
+    restart: unless-stopped
+
+networks:
+  platinum:
+    external: true
+    name: platinum
