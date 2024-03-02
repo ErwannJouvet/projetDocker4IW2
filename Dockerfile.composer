@@ -3,11 +3,44 @@ FROM alpine:latest
 # On assigne la metadata pour l'image
 LABEL maintainer="Erwann JOUVET <vinistys@gmail.com>"
 
-# Installation des dépendances nécessaires pour Composer
-RUN apk --no-cache add curl php php-json php-phar php-openssl php-curl php-zlib php-dom php-mbstring
+# Pour lancer toutes les prochaines instructions dans /app sans avoir à le préciser
+WORKDIR /app
 
-# Téléchargement et installation de Composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Installation des dépendances globales
+RUN apk add --no-cache \
+    acl \
+    fcgi \
+    file \
+    bash \
+    git \
+    linux-headers \
+    npm \
+    ;
 
-# Exécuter Composer lorsqu'un conteneur basé sur cette image est démarré
-CMD ["php", "-S", "0.0.0.0:8080", "-t", "public"]
+# Installation des dépendances nécessaires pour Composer 
+RUN apk add --no-cache \
+    php81 \
+    php81-cli \
+    php81-phar \
+    php81-json \
+    php81-openssl \
+    php81-pdo \
+    php81-pdo_pgsql \
+    php81-simplexml \
+    php81-mbstring \
+    php81-tokenizer \
+    php81-xml \
+    php81-ctype \
+    php81-iconv \
+    php81-dom \
+    php81-session \
+    curl \
+    make
+
+# Installation de composer via telechargement du script depuis le site et en l'executant avec PHP8.1 et on place l'executable dans /usr/local/bin avec le nom composer 
+# Création lien symbolique pour utiliser PHP 8.1 même si via le chemin usr/bin/php
+RUN curl -sS https://getcomposer.org/installer | php81 -- --install-dir=/usr/local/bin --filename=composer \
+    && ln -s /usr/bin/php81 /usr/bin/php
+
+# Lancement d'une commande persistante pour que le conteneur ne s'éteigne pas 
+CMD ["tail", "-f", "/dev/null"]

@@ -1,33 +1,15 @@
-FROM alpine:latest
-
-WORKDIR /app
-
-# Install persistent/runtime dependencies
-RUN apk add --no-cache \
-    acl \
-    fcgi \
-    file \
-    bash \
-    git \
-    linux-headers \
-    npm \
-    ;
-RUN apk --no-cache add php81 \
-    php81-cli \
-    php81-phar php81-json php81-openssl php81-pdo php81-pdo_pgsql php81-mbstring php81-tokenizer php81-xml php81-ctype php81-iconv php81-simplexml php81-dom php81-session curl git bash && \
-    curl -sS https://getcomposer.org/installer | php81 -- --install-dir=/usr/local/bin --filename=composer && \
-    ln -s /usr/bin/php81 /usr/bin/php
+FROM projetdocker4iw2-composer
 
 # On supprime le dossier si il existe
 RUN rm -rf /var/www/html
 
-# Change de dossier pour le projet symfony (le crée si il n'existe pas)
-WORKDIR /var/www/html
+# Change de dossier pour le projet symfony (le créer si il n'existe pas)
+WORKDIR /var/www/html/public
 
-# Création du projet symfony
-# RUN composer create-project symfony/skeleton .
+# Création du squelette symfony
+RUN composer create-project symfony/skeleton .
 
-# Installation des extensions php nécessaires pour symfony
+# Installation des extensions nécessaires pour symfony
 RUN apk add --no-cache \
     postgresql-dev \
     libxml2-dev \
@@ -36,9 +18,18 @@ RUN apk add --no-cache \
     php81-posix \
     php81-pdo \
     bash \
-    curl \
-    && curl -sS https://get.symfony.com/cli/installer | bash \
+    curl
+
+# Installation de Symfony CLI 
+RUN curl -sS https://get.symfony.com/cli/installer | bash \
     && mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+
+# Setup git info
+RUN git config --global user.email "vinistys@gmail.com" \
+    && git config --global user.name "JOUVET Erwann"
+
+#Verification si dossier existant
+RUN mkdir -p /var/www/html/public
 
 # On expose le container symfony sur le port 8000
 EXPOSE 8000
