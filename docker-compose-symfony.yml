@@ -5,6 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.composer
+    # image: pedrodss/custom-composer
     restart: unless-stopped
     networks:
       - platinum
@@ -13,6 +14,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.symfony
+    # image: pedrodss/custom-symfony
     depends_on:
       - composer
     environment:

@@ -40,7 +40,7 @@ RUN apk add --no-cache \
 # Installation de composer via telechargement du script depuis le site et en l'executant avec PHP8.1 et on place l'executable dans /usr/local/bin avec le nom composer 
 # Création lien symbolique pour utiliser PHP 8.1 même si via le chemin usr/bin/php
 RUN curl -sS https://getcomposer.org/installer | php81 -- --install-dir=/usr/local/bin --filename=composer \
-    && ln -s /usr/bin/php81 /usr/bin/php
+    && if [ ! -e /usr/bin/php ]; then ln -s /usr/bin/php81 /usr/bin/php; fi
 
 # Lancement d'une commande persistante pour que le conteneur ne s'éteigne pas 
 CMD ["tail", "-f", "/dev/null"]

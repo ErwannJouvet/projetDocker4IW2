@@ -1,4 +1,4 @@
-FROM projetdocker4iw2-composer
+FROM pedrodss/custom-composer:v1.0
 
 # On supprime le dossier si il existe
 RUN rm -rf /var/www/html
