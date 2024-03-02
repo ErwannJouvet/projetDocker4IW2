@@ -2,10 +2,10 @@ version: "3.8"
 
 services:
   postgresql:
-    build:
-        context: .
-        dockerfile: Dockerfile.postgresql
-    # image: pedrodss/custom-postgresql
+    # build:
+    #     context: .
+    #     dockerfile: Dockerfile.postgresql
+    image: pedrodss/custom-postgresql:v1.0
     ports:
       - "5432:5432"
     environment:
@@ -18,10 +18,10 @@ services:
       - platinum
 
   adminer:
-    build:
-      context: .
-      dockerfile: Dockerfile.adminer
-    # image: pedrodss/custom-adminer
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.adminer
+    image: pedrodss/custom-adminer:v1.0
     depends_on:
       - postgresql
     ports:

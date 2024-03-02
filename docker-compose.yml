@@ -2,17 +2,17 @@ version: "3.8"
 
 services:
   composer:
-    build:
-      context: .
-      dockerfile: Dockerfile.composer
-    # image: pedrodss/custom-composer
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.composer
+    image: pedrodss/custom-composer:v1.0
     restart: unless-stopped
   
   postgresql:
-    build:
-        context: .
-        dockerfile: Dockerfile.postgresql
-    # image: pedrodss/custom-postgresql
+    # build:
+    #     context: .
+    #     dockerfile: Dockerfile.postgresql
+    image: pedrodss/custom-postgresql:v1.0
     ports:
       - "5432:5432"
     environment:
@@ -25,10 +25,10 @@ services:
       - platinum
 
   symfony:
-    build:
-      context: .
-      dockerfile: Dockerfile.symfony
-    # image: pedrodss/custom-symfony
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.symfony
+    image: pedrodss/custom-symfony:v1.0
     depends_on:
       - composer
       - postgresql
@@ -43,10 +43,10 @@ services:
     restart: unless-stopped
     
   adminer:
-    build:
-      context: .
-      dockerfile: Dockerfile.adminer
-    # image: pedrodss/custom-adminer
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.adminer
+    image: pedrodss/custom-adminer:v1.0
     depends_on:
       - postgresql
     ports:

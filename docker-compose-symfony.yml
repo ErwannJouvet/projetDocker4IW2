@@ -2,19 +2,19 @@ version: "3.8"
 
 services:
   composer:
-    build:
-      context: .
-      dockerfile: Dockerfile.composer
-    # image: pedrodss/custom-composer
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.composer
+    image: pedrodss/custom-composer:v1.0
     restart: unless-stopped
     networks:
-      - platinum
+      - star
 
   symfony:
-    build:
-      context: .
-      dockerfile: Dockerfile.symfony
-    # image: pedrodss/custom-symfony
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.symfony
+    image: pedrodss/custom-symfony:v1.0
     depends_on:
       - composer
     environment:
@@ -24,10 +24,10 @@ services:
     ports:
       - 8000:8000
     networks:
-      - platinum
+      - star
     restart: unless-stopped
 
 networks:
-  platinum:
+  star:
     external: true
     name: platinum
