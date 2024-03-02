@@ -18,9 +18,9 @@ docker compose exec symfony composer create-project symfony/skeleton . \
 docker compose exec symfony composer require symfony/maker-bundle --dev \
 docker compose exec symfony composer require symfony/orm-pack \
 docker compose exec symfony make:entity : \
-    * name : Todo
-    * title : string
-    * done : boolean
-\Deplacer le fichier BaseTodoController.php a la racine dans le dossier src/src/Controller & le renommer en TodoController.php \
+    1. name : Todo
+    2. title : string
+    3. done : boolean  
+Deplacer le fichier BaseTodoController.php a la racine dans le dossier src/src/Controller & le renommer en TodoController.php \
 
 Aller au lien suivant : http://localhost:8000/todos
