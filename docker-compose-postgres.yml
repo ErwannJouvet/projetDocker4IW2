@@ -15,7 +15,7 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
     networks:
-      - platinum
+      - star
 
   adminer:
     # build:
@@ -27,11 +27,11 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - platinum
+      - star
 
 volumes:
   db_data:
 
 networks:
-  platinum:
+  star:
     driver: bridge

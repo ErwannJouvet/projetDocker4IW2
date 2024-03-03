@@ -10,13 +10,17 @@ docker compose build (--no-cache si besoin) \
 docker compose up (-d si pas d'interaction)
 
 # Comment lancer les deux docker compose séparée
-Il faut être certains que le network utiliser existe. \
-docker network create platinum
+Il faut être certains que les networks utilisés existent. \
+docker network create star (pas obligatoire car interne)
+docker network create platinum (obligatoire car externe)
 
 docker compose -f docker-compose-symfony.yml -f docker-compose-postgres.yml build \
 docker compose -f docker-compose-symfony.yml -f docker-compose-postgres.yml up
 
-# Initialiser le projet une fois build
+# Initialiser le projet première fois (image et docker-compose seulement)
+Docker client : \
+se placer dans le dossier /var/www/html \
+rm -rf public \
 docker compose exec symfony composer create-project symfony/skeleton . \
 docker compose exec symfony composer require symfony/maker-bundle --dev \
 docker compose exec symfony composer require symfony/orm-pack \
