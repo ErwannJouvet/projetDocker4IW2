@@ -31,7 +31,10 @@ docker compose exec symfony bin/console make:entity : \
     1. name : Todo \
     2. title : string \
     3. done : boolean  
-Deplacer le fichier TodoController.php a la racine dans le dossier ./src/src/Controller  
+Deplacer le fichier TodoController.php a la racine dans le dossier ./src/src/Controller \
+
+Modifier le .env et rajouter : DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-mydatabasepassword}@postgresql:5432/${POSTGRES_DB:-symfony_db}?serverVersion=${POSTGRES_VERSION:-15.6} \
+Pour la connexion avec la base de donnée.
 
 Aller au lien suivant : http://localhost:8000/todos
 
