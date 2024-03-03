@@ -40,21 +40,21 @@ Aller au lien suivant : http://localhost:8000/todos
 
 # Images
 
-Adminer : pedrodss/custom-adminer:v1.0
-Composer : pedrodss/custom-composer:v1.0
-Postgresql : pedrodss/custom-postgresql:v1.0
-Symfony : pedrodss/custom-symfony:v1.0
+Adminer : pedrodss/custom-adminer:v1.0 \
+Composer : pedrodss/custom-composer:v1.0 \
+Postgresql : pedrodss/custom-postgresql:v1.0 \
+Symfony : pedrodss/custom-symfony:v1.0 \
 
-# Accès à la DB
+# Accès à la DB via Adminer
 
-Système : PostgreSQL
-Serveur : postgresql
-Utilisateur : postgres
-Mot de passe : mydatabasepassword
-Base de données : symfony_db
+Système : PostgreSQL \
+Serveur : postgresql \
+Utilisateur : postgres \
+Mot de passe : mydatabasepassword \
+Base de données : symfony_db \
 
 # Attention
 
-### En cas d'erreur du cache executer la commande suivante : \
+### En cas d'erreur du cache executer la commande suivante :
 
 docker compose exec symfony bin/console cache:clear
